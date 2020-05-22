@@ -64,7 +64,7 @@ class main():
         # set up the learning algos
         # this will change before each process run
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         # this is the classifier which should do some magic for us which i will of course fully explain and know exactly
         # what i mean, totally, in my report
 
@@ -85,15 +85,20 @@ class main():
         # trying different knn vars on digits
         # ... to assess different results
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='distance', algorithm='ball_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
+				# flag 1: n_neighbors = number of neighbours to classify with a point
+				# flag 2: weights = how to weight local neighbourhood, uniformly or by inverse of distance
+				# flag 3: algorithm = algorithm to optimise function, either ball_tree or kd_tree
+				# flag 4: leaf_size = number of leaves in the tree, optimal value varies by dataset
+				# flag 5: p = power against metric, where 1 is manhattan_distance and 2 is euclidean_distance
         self.doLearning('Digits Data, 5, distance, ball_tree, 30, 2', knn, logistic, digitsData, digitsGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='kd_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Digits Data, 5, uniform, kd_tree, 30, 2', knn, logistic, digitsData, digitsGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='distance', algorithm='kd_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Digits Data, 5, distance, kd_tree, 30, 2', knn, logistic, digitsData, digitsGroundTruth)
 
         #
@@ -101,23 +106,23 @@ class main():
         # lets try changing numbers
         print('[I] No change in output expected . . . Altering n_neightbours, leaf_size, p')
         knn = neighbors.KNeighborsClassifier(n_neighbors=4, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=20, p=2, metric='minkowski')
+                                             leaf_size=20, p=2)
         self.doLearning('Digits Data, 4, uniform, ball_tree, 20, 2', knn, logistic, digitsData, digitsGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=3, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=10, p=2, metric='minkowski')
+                                             leaf_size=10, p=2)
         self.doLearning('Digits Data, 3, uniform, ball_tree, 10, 2', knn, logistic, digitsData, digitsGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=6, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=40, p=2, metric='minkowski')
+                                             leaf_size=40, p=2)
         self.doLearning('Digits Data, 6, uniform, ball_tree, 40, 2', knn, logistic, digitsData, digitsGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=7, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=50, p=2, metric='minkowski')
+                                             leaf_size=50, p=2)
         self.doLearning('Digits Data, 7, uniform, ball_tree, 50, 2', knn, logistic, digitsData, digitsGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=7, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=50, p=3, metric='minkowski')
+                                             leaf_size=50, p=3)
         self.doLearning('Digits Data, 7, uniform, ball_tree, 50, 3', knn, logistic, digitsData, digitsGroundTruth)
 
         #
@@ -134,15 +139,15 @@ class main():
         # trying different knn vars on iris
         # ... to assess different results
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='distance', algorithm='ball_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Iris Data, 5, distance, ball_tree, 30, 2', knn, logistic, irisData, irisGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='kd_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Iris Data, 5, uniform, kd_tree, 30, 2', knn, logistic, irisData, irisGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='distance', algorithm='kd_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Iris Data, 5, distance, kd_tree, 30, 2', knn, logistic, irisData, irisGroundTruth)
 
         #
@@ -150,23 +155,23 @@ class main():
         # lets try changing numbers
         print('[I] Picking distance, ball_tree . . . Altering n_neightbours, leaf_size, p')
         knn = neighbors.KNeighborsClassifier(n_neighbors=4, weights='distance', algorithm='ball_tree',
-                                             leaf_size=20, p=2, metric='minkowski')
+                                             leaf_size=20, p=2)
         self.doLearning('Iris Data, 4, uniform, ball_tree, 20, 2', knn, logistic, irisData, irisGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=3, weights='distance', algorithm='ball_tree',
-                                             leaf_size=10, p=2, metric='minkowski')
+                                             leaf_size=10, p=2)
         self.doLearning('Iris Data, 3, uniform, ball_tree, 10, 2', knn, logistic, irisData, irisGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=6, weights='distance', algorithm='ball_tree',
-                                             leaf_size=40, p=2, metric='minkowski')
+                                             leaf_size=40, p=2)
         self.doLearning('Iris Data, 6, uniform, ball_tree, 40, 2', knn, logistic, irisData, irisGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=7, weights='distance', algorithm='ball_tree',
-                                             leaf_size=50, p=2, metric='minkowski')
+                                             leaf_size=50, p=2)
         self.doLearning('Iris Data, 7, uniform, ball_tree, 50, 2', knn, logistic, irisData, irisGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=7, weights='distance', algorithm='ball_tree',
-                                             leaf_size=50, p=3, metric='minkowski')
+                                             leaf_size=50, p=3)
         self.doLearning('Iris Data, 7, uniform, ball_tree, 50, 3', knn, logistic, irisData, irisGroundTruth)
 
         #
@@ -183,15 +188,15 @@ class main():
         # trying different knn vars on wine
         # ... to assess different results
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='distance', algorithm='ball_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Wine Data, 5, distance, ball_tree, 30, 2', knn, logistic, wineData, wineGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='kd_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Wine Data, 5, uniform, kd_tree, 30, 2', knn, logistic, wineData, wineGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=5, weights='distance', algorithm='kd_tree',
-                                             leaf_size=30, p=2, metric='minkowski')
+                                             leaf_size=30, p=2)
         self.doLearning('Wine Data, 5, distance, kd_tree, 30, 2', knn, logistic, wineData, wineGroundTruth)
 
         #
@@ -199,23 +204,23 @@ class main():
         # lets try changing numbers
         print('[I] Picking uniform, ball_tree . . . Altering n_neightbours, leaf_size, p')
         knn = neighbors.KNeighborsClassifier(n_neighbors=4, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=20, p=2, metric='minkowski')
+                                             leaf_size=20, p=2)
         self.doLearning('Wine Data, 4, uniform, ball_tree, 20, 2', knn, logistic, wineData, wineGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=3, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=10, p=2, metric='minkowski')
+                                             leaf_size=10, p=2)
         self.doLearning('Wine Data, 3, uniform, ball_tree, 10, 2', knn, logistic, wineData, wineGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=6, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=40, p=2, metric='minkowski')
+                                             leaf_size=40, p=2)
         self.doLearning('Wine Data, 6, uniform, ball_tree, 40, 2', knn, logistic, wineData, wineGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=7, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=50, p=2, metric='minkowski')
+                                             leaf_size=50, p=2)
         self.doLearning('Wine Data, 7, uniform, ball_tree, 50, 2', knn, logistic, wineData, wineGroundTruth)
 
         knn = neighbors.KNeighborsClassifier(n_neighbors=7, weights='uniform', algorithm='ball_tree',
-                                             leaf_size=50, p=3, metric='minkowski')
+                                             leaf_size=50, p=3)
         self.doLearning('Wine Data, 7, uniform, ball_tree, 50, 3', knn, logistic, wineData, wineGroundTruth)
 
 
