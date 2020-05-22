@@ -8,5 +8,6 @@
 
 // namespace
 using std::cout;
+using std::locale;
 
 #endif // MAIN_H

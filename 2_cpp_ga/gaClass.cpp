@@ -2,20 +2,31 @@
 #include "gaClass.h"
 
 gaClass::gaClass() {
-	
+	// init
+	cout << "[I] Initialising ga object . . . done" << "\n";
+	cout << "\n";
+}
+
+gaClass::~gaClass() {
+	// bye
+	cout << "[I] Deleting ga object . . . done" << "\n";
+	cout << "[I] Program quitting . . . done" << "\n";
+}
+
+int gaClass::runProc() {
+	// init
 	initPopulation();//create a random population of individuals
 	
+	// do proc -- eggholder version
 	for(currentGen = 0; currentGen < generations; currentGen++) {
-		getFitness();
+		getFitness(0, 1024.0); // args: fitnessFunction, range
 		viewPopulation();
 		doCrossover();
 		mutate();
 		swapPopulation();
 	}
-}
-
-gaClass::~gaClass() {
 	
+	return 0;
 }
 
 int gaClass::initPopulation() {
@@ -29,7 +40,7 @@ int gaClass::initPopulation() {
 	return 0;
 }
 
-int gaClass::getFitness() {
+int gaClass::getFitness(int32_t fitnessFunction, float64_t range) {
 	// vars
 	int32_t sum1 = 0;
 	int32_t sum2 = 0;
@@ -45,8 +56,8 @@ int gaClass::getFitness() {
 		sum1 = 0;
 		z = 1;
 		
-		for (int32_t j = 0; j < bits; j++) {
-			if (ind[i][bits-j-1] == 1) sum1 += z;
+		for (int32_t j = 0; j < (individual / 2); j++) {
+			if (ind[i][(individual / 2) - j - 1] == 1) sum1 += z;
 			z *= 2;
 		}
 		
@@ -54,21 +65,25 @@ int gaClass::getFitness() {
 		sum2 = 0;
 		z = 1;
 		
-		for (int32_t j = 0; j < bits; j++) {
+		for (int32_t j = 0; j < (individual / 2); j++) {
 			if (ind[i][individual - j - 1] == 1) sum2 += z;
 			z *= 2;
 		}
 		
 		// now normalise each value (range 0.000-1.000)
-		x = sum1 / pow(2, bits);
-		y = sum2 / pow(2, bits);
+		x = sum1 / pow(2, (individual / 2));
+		y = sum2 / pow(2, (individual / 2));
 		
-		// and finally multiply by the range (1024) and sub 512 to get -512 to 512
-		x = x * 1024.0 - 512.0;
-		y = y * 1024.0 - 512.0;
+		// and finally multiply by the range and sub range/2 to get 'bounding box'
+		x = x * range - (range / 2);
+		y = y * range - (range / 2);
 		
-		//finally calculate fitness from eggholder function
-		fitness[i]= -1.0 * (y + 47.0) * sin(sqrt(abs(y + x / 2.0 + 47.0))) + -1.0 * x * sin(sqrt(abs(x - (y + 47.0))));
+		// finally calculate fitness from eggholder function
+		// 0 == eggholder
+		// 1 == schaffer n.2
+		if(fitnessFunction == 0) fitness[i] = -1.0 * (y + 47.0) * sin(sqrt(abs(y + x / 2.0 + 47.0))) + -1.0 * x * sin(sqrt(abs(x - (y + 47.0))));
+		if(fitnessFunction == 1) fitness[i] = 0;
+		
 		zz++;
 	}
 	
@@ -118,16 +133,16 @@ int gaClass::getFitness() {
 }
 
 int gaClass::viewPopulation() {
-	cout << "Generation=" << currentGen << "\tComputational Effort E=" << zz << "\n";
+	cout << "[I] Current generation: " << currentGen+1 << "\t\tComputational effort: " << zz << "\n";
 	
 	for (int32_t i = 0; i < 10; i++) {
-		cout << "ind[" << i << "]=";
+		cout << "Individual " << i << ": ";
 		
 		for (int32_t j = 0; j < individual; j++) {
 			cout << ind[i][j];
 		}
 		
-		cout << "\tFitness=" << fitness[i] << " Normfit=" << normFit[i] << "\n";
+		cout << "\t\tCurrent fitness=" << fitness[i] << "    \tnormFit value: " << normFit[i] << "\n";
 	}
 	
 	return 0;
