@@ -30,9 +30,8 @@ int gaClass::runProc() {
 }
 
 int gaClass::initPopulation() {
-	for(int32_t i = 0; i < populationSize;i++) {
-		for (int32_t j = 0; j < individual; j++)
-		{
+	for(int32_t i = 0; i < populationSize; i++) {
+		for (int32_t j = 0; j < individual; j++) {
 			ind[i][j] = rand() % 2;
 		}
 	}
